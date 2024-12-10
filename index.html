@@ -1,98 +1,51 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>URL Converter</title>
-
     <style>
-
         body {
-
             font-family: Arial, sans-serif;
-
             padding: 20px;
-
         }
-
         input, button {
-
             padding: 10px;
-
             margin: 5px;
-
         }
-
         #output {
-
             margin-top: 10px;
-
             font-weight: bold;
-
         }
-
     </style>
-
 </head>
-
 <body>
-
     <h1>URL Converter</h1>
-
     <label for="inputUrl">Enter the URL:</label>
-
     <input type="text" id="inputUrl" placeholder="Enter sharing embed link" size="50">
-
     <button onclick="convertUrl()">Convert</button>
-
     
-
     <div id="output"></div>
 
-
-
     <script>
-
         function convertUrl() {
-
             var inputUrl = document.getElementById('inputUrl').value;
-
             var outputDiv = document.getElementById('output');
-
             
-
             // Regular expression to match the pattern in the input URL
-
             var regex = /https:\/\/www\.terabox\.com\/sharing\/embed\?surl=([^&]+)/;
-
             var match = inputUrl.match(regex);
-
             
-
             if (match) {
-
                 var surl = match[1];
-
                 var outputUrl = 'https://www.terabox.com/wap/share/filelist?surl=' + surl;
 
-                outputDiv.textContent = 'Converted URL: ' + outputUrl;
-
+                // Create a clickable link
+                outputDiv.innerHTML = 'Converted URL: <a href="' + outputUrl + '" target="_blank">' + outputUrl + '</a>';
             } else {
-
                 outputDiv.textContent = 'Invalid URL format. Please enter a valid URL.';
-
             }
-
         }
-
     </script>
-
 </body>
-
 </html>
-
