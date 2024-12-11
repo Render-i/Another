@@ -33,12 +33,12 @@
             var outputDiv = document.getElementById('output');
             
             // Regular expression to match URLs with .com or .app
-            var regex = /https:\/\/www\.(example\.com|example\.app)\/sharing\/embed\?surl=([^&]+)/;
+            var regex = /https:\/\/www\.(terabox\.com|terabox\.app)\/sharing\/embed\?surl=([^&]+)/;
             var match = inputUrl.match(regex);
             
             if (match) {
-                var surl = match[1];
-                var outputUrl = 'https://www.example.com/wap/share/filelist?surl=' + surl;
+                var surl = match[2];
+                var outputUrl = 'https://www.terabox.com/wap/share/filelist?surl=' + surl;
 
                 // Create a clickable link
                 outputDiv.innerHTML = 'Converted URL: <a href="' + outputUrl + '" target="_blank">' + outputUrl + '</a>';
