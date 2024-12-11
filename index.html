@@ -22,7 +22,7 @@
 <body>
     <h1>URL Converter</h1>
     <label for="inputUrl">Enter the URL:</label>
-    <input type="text" id="inputUrl" placeholder="Enter sharing embed link" size="50">
+    <input type="text" id="inputUrl" placeholder="Enter sharing embed or filelist link" size="50">
     <button onclick="convertUrl()">Convert</button>
     
     <div id="output"></div>
@@ -32,18 +32,34 @@
             var inputUrl = document.getElementById('inputUrl').value;
             var outputDiv = document.getElementById('output');
             
-            // Regular expression to match URLs with .com or .app
-            var regex = /https:\/\/www\.(terabox\.com|terabox\.app)\/sharing\/embed\?surl=([^&]+)/;
-            var match = inputUrl.match(regex);
-            
-            if (match) {
-                var surl = match[2];
+            // Regular expressions to match both URL formats
+            var filelistRegex = /https:\/\/www\.(terabox\.com|terabox\.app)\/wap\/share\/filelist\?surl=([^&]+)/;
+            var embedRegex = /https:\/\/www\.(terabox\.com|terabox\.app)\/sharing\/embed\?surl=([^&]+)/;
+
+            // Check if the URL matches the /wap/share/filelist format
+            var matchFilelist = inputUrl.match(filelistRegex);
+            // Check if the URL matches the /sharing/embed format
+            var matchEmbed = inputUrl.match(embedRegex);
+
+            if (matchFilelist) {
+                // If the URL is in the /wap/share/filelist format, convert it to /sharing/embed format
+                var surl = matchFilelist[2];  // Extract the surl parameter
+                var outputUrl = 'https://www.terabox.com/sharing/embed?surl=' + surl;
+
+                // Display the converted URL
+                outputDiv.innerHTML = `Converted URL: <a href="${outputUrl}" target="_blank">${outputUrl}</a>`;
+
+            } else if (matchEmbed) {
+                // If the URL is in the /sharing/embed format, convert it to /wap/share/filelist format
+                var surl = matchEmbed[2];  // Extract the surl parameter
                 var outputUrl = 'https://www.terabox.com/wap/share/filelist?surl=' + surl;
 
-                // Create a clickable link
-                outputDiv.innerHTML = 'Converted URL: <a href="' + outputUrl + '" target="_blank">' + outputUrl + '</a>';
+                // Display the converted URL
+                outputDiv.innerHTML = `Converted URL: <a href="${outputUrl}" target="_blank">${outputUrl}</a>`;
+
             } else {
-                outputDiv.textContent = 'Invalid URL format. Please enter a valid URL.';
+                // If the input URL doesn't match either expected format
+                outputDiv.textContent = 'Invalid URL format. Please enter a valid URL in either format.';
             }
         }
     </script>
